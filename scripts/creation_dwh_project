@@ -1,0 +1,64 @@
+============================================================
+ Script Name : creation_dwh_project
+ Purpose     : Drop and recreate the dwh_project database
+               and initialise the bronze, silver, and gold
+               schemas for a data warehouse (medallion
+               architecture).
+
+ Description :
+   - If the database 'dwh_project' exists, it will be
+     forcibly dropped (all active connections terminated).
+   - The database is then recreated from scratch.
+   - Bronze, Silver, and Gold schemas are created to
+     support raw, curated, and business-ready data layers.
+
+ WARNING ⚠️ :
+   THIS SCRIPT IS DESTRUCTIVE.
+   Running this script will PERMANENTLY DELETE the
+   'dwh_project' database and ALL DATA within it.
+
+   - Do NOT run this in Production.
+   - Intended for local development, testing, or
+     non-production environments only.
+   - Ensure you are connected to the correct SQL Server
+     instance before executing.
+
+ Usage :
+   Run from the master database.
+============================================================
+
+USE master;
+GO
+
+-- Drop and recreate database 'dwh_pr0ject'
+
+IF EXISTS (SELECT 1 FROM sys.databases WHERE name = 'dwh_project')
+BEGIN
+	ALTER DATABASE dwh_project SET single_user WITH  ROLLBACK IMMEDIATE;
+	DROP DATABASE dwh_project
+END;
+GO
+
+-- Create Datawarehouse
+
+CREATE DATABASE dwh_project;
+GO
+
+-- Use Datawarehouse
+
+USE dwh_project;
+GO
+
+-- Create Bronze Scheme
+
+CREATE SCHEMA bronze;
+GO
+
+-- Create silver Scheme
+
+CREATE SCHEMA silver;
+GO
+-- Create gold Scheme
+
+CREATE SCHEMA gold;
+GO
