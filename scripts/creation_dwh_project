@@ -30,7 +30,7 @@
 USE master;
 GO
 
--- Drop and recreate database 'dwh_pr0ject'
+-- Drop and recreate database 'dwh_project'
 
 IF EXISTS (SELECT 1 FROM sys.databases WHERE name = 'dwh_project')
 BEGIN
